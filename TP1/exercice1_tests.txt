@@ -1,0 +1,12 @@
+STR             |       Result
+                |
+"test\n"        |  "test"
+"test\r\n"      |  "test"
+"test\r"        |  "test\r"
+"test\n\n"      |  "test\n"
+""              |  ""
+Null            |  NullPointerException
+"\n"            |  ""
+"\r\n"          |  ""
+"\ntest"        |  "\ntest"
+"test\n\r"      |  "test\n\r"

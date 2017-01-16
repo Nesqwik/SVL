@@ -1,0 +1,27 @@
+The ``tp1`` module
+======================
+
+Using ``Stuff``
+-------------------
+
+This is an example text file in reStructuredText format.  First import
+``Stuff`` from the ``tp1`` module:
+
+    >>> from tp1 import Stuff
+
+Now use it:
+
+    >>> s = Stuff()
+    >>> s.refs()
+    []
+
+    >>> s.add_ref("azerty")
+    >>> s.refs()
+    ['azerty']
+
+    >>> s.add_item_ref("azerty", 5)
+    >>> s.item_ref("azerty")
+    5
+
+    >>> s.add_item_ref("azerty", -1)
+    ValueError

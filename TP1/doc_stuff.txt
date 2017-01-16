@@ -24,4 +24,11 @@ Now use it:
     5
 
     >>> s.add_item_ref("azerty", -1)
+    Traceback (most recent call last):
+    [...]
     ValueError
+
+    >>> s.add_item_ref("azerty", "1")
+    Traceback (most recent call last):
+    [...]
+    TypeError: unorderable types: str() <= int()

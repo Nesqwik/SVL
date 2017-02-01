@@ -1,12 +1,15 @@
 import unittest
 from mockito import mock, when, verify
 
+import caisse
+import carte
 from caisse import *
+from carte import *
 
-class TestLaCarteEstInsereeEtRetireeDeLaCaisse(unittest.TestCase):
+class TestIntegrationLaCarteEstInsereeEtRetireeDeLaCaisse(unittest.TestCase):
     def test_inserer_retirer_carte(self):
         caisse = Caisse()
-        carte = mock()
+        carte = Carte(42,7,7)
 
         caisse.inserer_carte(carte)
 
@@ -14,8 +17,8 @@ class TestLaCarteEstInsereeEtRetireeDeLaCaisse(unittest.TestCase):
 
     def test_inserer_carte_avec_carte_deja_insere(self):
         caisse = Caisse()
-        carte = mock()
-        carte2 = mock()
+        carte = Carte(42,7,7)
+        carte2 = Carte(42,7,7)
 
         caisse.inserer_carte(carte)
         with self.assertRaises(LecteurDejaUtiliseError):
@@ -29,22 +32,18 @@ class TestLaCarteEstInsereeEtRetireeDeLaCaisse(unittest.TestCase):
 
 
 
-class TestLaCaisseVisualiseLesSoldesDeLaCarte(unittest.TestCase):
+class TestIntegrationLaCaisseVisualiseLesSoldesDeLaCarte(unittest.TestCase):
 
     def test_visualiser_solde_carte(self):
         caisse = Caisse()
-        carte = mock()
-
-        when(carte).solde().thenReturn(42)
+        carte = Carte(42,7,7)
 
         caisse.inserer_carte(carte)
         self.assertEqual(42, caisse.solde())
 
     def test_visualiser_nb_ticket_carte(self):
         caisse = Caisse()
-        carte = mock()
-
-        when(carte).nb_ticket().thenReturn(21)
+        carte = Carte(42,21,7)
 
         caisse.inserer_carte(carte)
         self.assertEqual(21, caisse.nb_ticket())
@@ -52,30 +51,24 @@ class TestLaCaisseVisualiseLesSoldesDeLaCarte(unittest.TestCase):
 class TestPaiementAvecTicket(unittest.TestCase):
     def setUp(self):
         self.caisse = Caisse()
-        self.carte = mock()
-
-        when(self.carte).solde().thenReturn(42)
-        when(self.carte).nb_ticket().thenReturn(10)
-        when(self.carte).prix_ticket().thenReturn(7)
-
+        self.carte = Carte(42,10,7)
         self.caisse.inserer_carte(self.carte)
 
 
     def test_paiement_repas_avec_solde_suffisant_avec_ticket(self):
         self.caisse.payer_repas_avec_ticket(9)
-
-        verify(self.carte).utiliser_ticket()
-        verify(self.carte, times=1).debiter(2)
+        self.assertEqual(9,self.carte.nb_ticket())
+        self.assertEqual(40,self.carte.solde())
 
     def test_paiement_repas_moins_cher_que_ticket(self):
         self.caisse.payer_repas_avec_ticket(6)
-        verify(self.carte).utiliser_ticket()
-        verify(self.carte, times=0).debiter()
+        self.assertEqual(9,self.carte.nb_ticket())
+        self.assertEqual(42,self.carte.solde())
 
     def test_paiement_repas_egale_au_ticket(self):
         self.caisse.payer_repas_avec_ticket(7)
-        verify(self.carte).utiliser_ticket()
-        verify(self.carte, times=0).debiter()
+        self.assertEqual(9,self.carte.nb_ticket())
+        self.assertEqual(42,self.carte.solde())
 
     def test_payer_repas_sans_carte(self):
         caisse = Caisse()
@@ -83,9 +76,11 @@ class TestPaiementAvecTicket(unittest.TestCase):
             caisse.payer_repas_avec_ticket(9)
 
     def test_payer_sans_ticket_sur_carte(self):
-        when(self.carte).nb_ticket().thenReturn(0)
+        caisse = Caisse()
+        carte = Carte(42,0,7)
+        caisse.inserer_carte(carte)
         with self.assertRaises(NbTicketInsuffisantError):
-            self.caisse.payer_repas_avec_ticket(50)
+            caisse.payer_repas_avec_ticket(50)
 
     def test_payer_repas_plus_cher_que_le_solde(self):
         with self.assertRaises(SoldeInsuffisantError):
@@ -95,15 +90,13 @@ class TestPaiementAvecTicket(unittest.TestCase):
 class TestPaiementSansTicket(unittest.TestCase):
     def setUp(self):
         self.caisse = Caisse()
-        self.carte = mock()
-
-        when(self.carte).solde().thenReturn(42)
+        self.carte = Carte(42,7,7)
         self.caisse.inserer_carte(self.carte)
 
 
     def test_paiement_repas_avec_solde_suffisant(self):
         self.caisse.payer_repas_sans_ticket(9)
-        verify(self.carte, times=1).debiter(9)
+        self.assertEqual(33, self.carte.solde())
 
     def test_payer_repas_sans_carte(self):
         caisse = Caisse()

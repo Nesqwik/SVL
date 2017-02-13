@@ -1,0 +1,7 @@
+2.2 :
+Nous ne construisons pas de message en dur dans le code. Nous utilisons le design pattern factory.
+
+2.3 :
+Attendre des entrées clavier n'est pas une bonne idée car il nécessite une action de l'humain (et donc est non automatisable et source d'erreur.)
+Des tests par fichier peuvent permettre une automatisation mais sont dépendant de l'architecture de la machine...
+Il faut donc mocker les entrées utilisateur au maximum, bannir totalement les entrées utilisateur et utiliser des fichiers de tests au minimum.

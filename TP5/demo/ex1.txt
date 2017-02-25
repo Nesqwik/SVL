@@ -1,0 +1,27 @@
+Q1)
+Les tests nécessaires pour le retour d'un livre:
+  - L'emprunt du livre a bien été cloturé
+  - La date de retour du livre est < ou > à 30 jours après le début de l'emprunt
+    - deux conditions > et <
+  - Lorsque le retour est effectué à plus de 30 jours le retard est signalé
+    - deux tests en cas de non retard et en cas de retard
+
+Q3)
+Les tests nécessaires pour la classe emprunt:
+  - La création de l'emprunt
+    - L'emprunt est en cours
+    - L'emprunt est créé à la date du jour
+  - Le rendu de l'emprunt
+    - L'emprunt est dévalidé
+    - L'emprunt est rendu à la date du jour
+  - Le rendu est réalisé en retard
+    - Oui ou Non
+
+Q5)
+Il est impossible de tester cette construction de méthode car elle dépend de la date à laquelle le test est réalisé.
+Le test de la date du jour ne peux donc pas être contrôlé. En revanche il est possible de réaliser une petite factory qui
+va retourner une fausse date juste pour la partie test.
+
+Q6)
+Au lieu de faire appel à TODAY du module Date il est plus judicieux de réaliser un module qui retournerai un appel à today
+en passant en paramètre de constructeur une instance de ce module

@@ -22,6 +22,8 @@ class LogParser():
         logLines = self.text_io.readlines()
 
         for logLineString in logLines:
+            if(not(self.check(logLineString))):
+                raise WrongFormatException
             logLine = logLineString.split(",")
             logs.append(self.logFactory.create_log(logLine[0].strip(), int(logLine[1].strip()), logLine[2].strip()))
 
@@ -41,4 +43,7 @@ class FileNotOpenException(Exception):
     pass
 
 class NoLogFactoryException(Exception):
+    pass
+
+class WrongFormatException(Exception):
     pass

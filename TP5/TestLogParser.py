@@ -24,6 +24,13 @@ class TestLogParserAvecStringIO(unittest.TestCase):
         self.assertEqual(1, len(logs))
         self.assertTrue(log in logs)
 
+    def test_parse_file_bad_line_throw_wrong_format_exception(self):
+        parser = LogParser()
+        parser.set_log_factory(mock())
+        parser.set_text_io(StringIO("2010-02-25, 5, error in database,error\n"))
+        with self.assertRaises(WrongFormatException):
+            parser.get_logs()
+
     def test_open_test_file_ok_multline(self):
         parser = LogParser()
 

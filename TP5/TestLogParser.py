@@ -60,3 +60,23 @@ class TestLogParserAvecStringIO(unittest.TestCase):
         parser.set_text_io(mock())
         with self.assertRaises(NoLogFactoryException):
             logs = parser.get_logs()
+
+    def test_format_log_ok(self):
+        parser = LogParser()
+        self.assertTrue(parser.check("2010-02-25, 5, error in database\n"))
+
+    def test_format_log_ko_inf_3_bloc(self):
+        parser = LogParser()
+        self.assertFalse(parser.check("2010-02-25, 5\n"))
+
+    def test_format_log_ko_sup_3_bloc(self):
+        parser = LogParser()
+        self.assertFalse(parser.check("2010-02-25, 5, test, test\n"))
+
+    def test_format_log_ko_bloc_1_not_date(self):
+        parser = LogParser()
+        self.assertFalse(parser.check("test, 5, test\n"))
+
+    def test_format_log_ko_bloc_2_not_int(self):
+        parser = LogParser()
+        self.assertFalse(parser.check("2010-02-25, test, test"))

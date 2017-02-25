@@ -1,3 +1,5 @@
+import re
+
 class LogParser():
 
     def __init__(self):
@@ -25,6 +27,15 @@ class LogParser():
 
         return logs
 
+    def check(self, input):
+        log = input.split(",")
+        if(len(log) != 3) :
+            return False
+        if(len(log[0].split("-")) != 3):
+            return False
+        if(not(re.match("[0-9]+", log[1].strip()))):
+            return False
+        return True
 
 class FileNotOpenException(Exception):
     pass

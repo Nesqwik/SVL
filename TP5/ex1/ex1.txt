@@ -1,0 +1,33 @@
+1.3 :
+Test de la classe emprunt :
+ - Test nominal : création emprunt avec utilisateur et livre : retourne un emprunt contenant utilisateur et livre et date du jour pour date de l'emprunt
+    - get_utilisateur est égal à l'utilisateur passé en paramètre
+    - get_livre est égal à l'utilisateur passé en paramètre
+    - get_date est égal à la date du jour
+
+- Test est_en_retard :
+  - si la date du rendu - la date de l'emprunt est <= à une durée défini (30 jours) : renvoie vrai
+  - si la date du rendu - la date de l'emprunt est < à une durée défini (30 jours) : renvoie faux
+Problèmatique :
+  Si l'objet emprunt gère seul la génération des dates d'emprunt et de rendu, il n'est pas possible de tester correctement.
+  Le test s'exécutant instantanément, la date de rendu sera égale à la date d'emprunt.
+  Il est donc nécessaire de pouvoir modifier ces dates ou de les générer avec un objet exterieur que l'on pourra mocker ou encore de créer une sous-classe pour override le fonctionnement de date
+
+
+
+1.5 :
+Comme vu précédemment, le code n'est pas testable car les dates sont gérés en interne et non modifiables.
+
+1.6 :
+Il serait possible de créer une sous-classe pour remplacer le fonctionnement de l'objet date de python :
+
+import datetime
+class NewDate(datetime.date):
+    @classmethod
+    def today(self):
+        return self(2017, 10, 10)
+datetime.date = NewDate
+
+# à l'utilisation :
+>>> datetime.date.today()
+NewDate(2017, 10, 10)

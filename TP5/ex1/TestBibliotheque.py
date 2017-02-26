@@ -16,7 +16,7 @@ from mockito import *
 
 
 class TestEmprunterCreeUnEmprunt(unittest.TestCase):
-    def test_emprunter_un_livre_cree_un_emprunt(self):
+    def test_emprunter_un_livre_cree_un_emprunt_avec_utilisateur_inconnu(self):
         fabrique_emprunt = mock()
         bibliotheque = Bibliotheque(fabrique_emprunt)
 
@@ -30,6 +30,20 @@ class TestEmprunterCreeUnEmprunt(unittest.TestCase):
 
         self.assertEqual(nouvel_emprunt, emprunt)
 
+    def test_emprunter_un_livre_cree_un_emprunt_avec_utilisateur_connu(self):
+        fabrique_emprunt = mock()
+        bibliotheque = Bibliotheque(fabrique_emprunt)
+
+        utilisateur = mock()
+        bibliotheque.emprunts[utilisateur] = []
+        livre = mock()
+        emprunt = mock()
+
+        when(fabrique_emprunt).creer_emprunt(utilisateur, livre).thenReturn(emprunt)
+
+        nouvel_emprunt = bibliotheque.emprunter(utilisateur, livre)
+
+        self.assertEqual(nouvel_emprunt, emprunt)
 
 
 # SUITE : TP5 Exercice 1 - Bibliotheque
@@ -68,7 +82,7 @@ class TestRetourLivre(unittest.TestCase):
         when(emprunt).est_en_retard().thenReturn(True)
 
         bibliotheque.emprunter(utilisateur, livre)
-        
+
         with self.assertRaises(RetourEnRetardError):
             bibliotheque.rendre(emprunt)
 

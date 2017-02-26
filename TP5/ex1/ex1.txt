@@ -16,7 +16,8 @@ Problèmatique :
 
 
 1.5 :
-Comme vu précédemment, le code n'est pas testable car les dates sont gérés en interne et non modifiables.
+Comme vu précédemment, le code n'est pas testable car les dates sont gérés en interne et non modifiables. de plus le test va donc dépendre du jour où il est lancé.
+Ainsi le jour de son développement le test passera au vert mais les jours suivants il sera obligatoirement au rouge sauf modification du test.
 
 1.6 :
 Il serait possible de créer une sous-classe pour remplacer le fonctionnement de l'objet date de python :

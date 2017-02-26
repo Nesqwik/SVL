@@ -14,7 +14,55 @@ import unittest
 import datetime
 from mockito import *
 
-class TestBibliothequeEmprunt(unittest.TestCase):
+class TestEmprunterCreeUnEmprunt(unittest.TestCase):
+    def test_emprunter_un_livre_cree_un_emprunt_avec_utilisateur_inconnu(self):
+        # création de la date d'emprunt
+        class NewDate(datetime.date):
+            @classmethod
+            def today(self):
+                return self(2017, 1, 1)
+        datetime.date = NewDate
+
+        fabrique_emprunt = mock()
+        bibliotheque = Bibliotheque(fabrique_emprunt)
+
+        utilisateur = mock()
+        livre = mock()
+        emprunt = Emprunt(utilisateur,livre)
+
+        when(fabrique_emprunt).creer_emprunt(utilisateur, livre).thenReturn(emprunt)
+
+        nouvel_emprunt = bibliotheque.emprunter(utilisateur, livre)
+
+        self.assertEqual(nouvel_emprunt, emprunt)
+        self.assertEqual(nouvel_emprunt.get_livre(), livre)
+        self.assertEqual(nouvel_emprunt.get_date_emprunt(), datetime.date.today())
+
+    def test_emprunter_un_livre_cree_un_emprunt_avec_utilisateur_connu(self):
+        # création de la date d'emprunt
+        class NewDate(datetime.date):
+            @classmethod
+            def today(self):
+                return self(2017, 1, 1)
+        datetime.date = NewDate
+
+        fabrique_emprunt = mock()
+        bibliotheque = Bibliotheque(fabrique_emprunt)
+
+        utilisateur = mock()
+        bibliotheque.emprunts[utilisateur] = []
+        livre = mock()
+        emprunt = Emprunt(utilisateur,livre)
+
+        when(fabrique_emprunt).creer_emprunt(utilisateur, livre).thenReturn(emprunt)
+
+        nouvel_emprunt = bibliotheque.emprunter(utilisateur, livre)
+
+        self.assertEqual(nouvel_emprunt, emprunt)
+        self.assertEqual(nouvel_emprunt.get_livre(), livre)
+        self.assertEqual(nouvel_emprunt.get_date_emprunt(), datetime.date.today())
+
+class TestBibliothequeEmpruntRetour(unittest.TestCase):
 
     def test_nominal_emprunt_retour_dans_les_temps(self):
         # création de la date d'emprunt

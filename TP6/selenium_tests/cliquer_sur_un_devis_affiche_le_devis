@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>cliquer_sur_un_devis_affiche_le_devis</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">cliquer_sur_un_devis_affiche_le_devis</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/quotes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=00007</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertLocation</td>
+	<td>http://localhost:8080/quote/00007</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=body &gt; p:nth-child(1)</td>
+	<td>Devis 00007</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=body &gt; p:nth-child(2)</td>
+	<td>Mozilla Inc</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=body &gt; p:nth-child(3)</td>
+	<td>Montant: 14500.00</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body p:nth-child(5) a@href</td>
+	<td>/quotes</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=body p:nth-child(5) a</td>
+	<td>Liste devis</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body form@action</td>
+	<td>/valid/00007</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body form@method</td>
+	<td>post</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body form input:nth-child(1)@name</td>
+	<td>date</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body form input:nth-child(2)@type</td>
+	<td>submit</td>
+</tr>
+<tr>
+	<td>assertAttribute</td>
+	<td>css=body form input:nth-child(1)@type</td>
+	<td>text</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,4 @@
+1.1
+Les données sont modifiés par le programme et donc les tests ne sont pas répétables.
+Il faut donc générer des jeux de tests initialisés avant chaque tests.
+Il faut pouvoir choisir de lancer le serveur avec ou sans jeux de tests.

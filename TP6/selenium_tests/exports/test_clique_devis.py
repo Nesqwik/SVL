@@ -11,10 +11,10 @@ class TestCliqueDevis(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:8080/"
+        self.base_url = "http://localhost:8080"
         self.verificationErrors = []
         self.accept_next_alert = True
-    
+
     def test_clique_devis(self):
         driver = self.driver
         driver.get(self.base_url + "/")
@@ -24,17 +24,17 @@ class TestCliqueDevis(unittest.TestCase):
         self.assertTrue(self.is_element_present(By.LINK_TEXT, "00008"))
         self.assertTrue(self.is_element_present(By.LINK_TEXT, "00007"))
         self.assertTrue(self.is_element_present(By.LINK_TEXT, "Accueil"))
-    
+
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
-    
+
     def is_alert_present(self):
         try: self.driver.switch_to_alert()
         except NoAlertPresentException as e: return False
         return True
-    
+
     def close_alert_and_get_its_text(self):
         try:
             alert = self.driver.switch_to_alert()
@@ -45,7 +45,7 @@ class TestCliqueDevis(unittest.TestCase):
                 alert.dismiss()
             return alert_text
         finally: self.accept_next_alert = True
-    
+
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)

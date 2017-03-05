@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-class TestScenarioNominalValidationDevis(unittest.TestCase):
+class TestScenarioNominalCreationDevis(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -15,18 +15,19 @@ class TestScenarioNominalValidationDevis(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def test_scenario_nominal_validation_devis(self):
+    def test_scenario_nominal_creation_devis(self):
         driver = self.driver
         driver.get(self.base_url + "/")
-        driver.find_element_by_link_text("Devis en attente de commandes").click()
-        driver.find_element_by_link_text("00007").click()
-        driver.find_element_by_name("date").clear()
-        driver.find_element_by_name("date").send_keys("02/02/20012")
+        driver.find_element_by_link_text("Creer devis").click()
+        driver.find_element_by_name("reference").clear()
+        driver.find_element_by_name("reference").send_keys("00010")
+        Select(driver.find_element_by_name("customer")).select_by_visible_text("Aquamacs SARL")
+        driver.find_element_by_name("amount").clear()
+        driver.find_element_by_name("amount").send_keys("20000")
         driver.find_element_by_css_selector("input[type=\"submit\"]").click()
-        driver.find_element_by_link_text("Accueil").click()
-        driver.find_element_by_link_text(u"Commandes validées").click()
-        driver.find_element_by_link_text("00007").click()
-        self.assertEqual("http://localhost:8080/order/00007", driver.current_url)
+        driver.find_element_by_link_text("00010").click()
+        self.assertEqual("Devis 00010", driver.find_element_by_css_selector("body > p:nth-child(1)").text)
+        self.assertEqual("Montant: 20000", driver.find_element_by_css_selector("body > p:nth-child(3)").text)
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)

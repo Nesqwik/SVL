@@ -1,0 +1,8 @@
+Les tests du serveur se trouvent le répertoire selenium_test/export
+
+La suite de tests à exécuté doit d'abord commencer par les fichiers test_clique* puis test_nominal*
+
+Le fichier data.json est le fichier de sauvegarde des données le fichier dataTest.json est la base pour la réalisation des tests.
+Le bach test.sh lance le serveur avec les données de test
+
+Enfin il est possible de spécifier manuellement au serveur le chemin vers le fichier de données en précisant en arguments le fichier au moment du lancement du serveur

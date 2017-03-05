@@ -11,6 +11,7 @@ import os
 import bottle
 import sys
 import json
+import re
 from order import Order
 from quote import Quote
 from customer import Customer
@@ -39,9 +40,14 @@ def quote(reference):
 @bottle.route('/valid/<reference>', method='POST')
 def valid(reference):
     date = bottle.request.forms.get('date')
+    if(not matchDate(date)):
+        bottle.redirect('/baddate/'+reference)
     valid_quote(reference, date)
     bottle.redirect('/quotes')
 
+@bottle.route('/baddate/<reference>')
+def badDateFormat(reference):
+    return bottle.template(TPLA_BADDATE, quote=reference)
 
 @bottle.route('/orders')
 def orders():
@@ -54,10 +60,22 @@ def order(reference):
     (customer, order) = read_order(reference)
     return bottle.template(TPLA_ORDER, reference=reference, amount=order.amount, customer=customer.name, date=order.date)
 
+@bottle.route('/create')
+def initFormCreate():
+    customers = list_customers()
+    return bottle.template(TPLA_CREER_DEVIS, customers=customers)
+
+@bottle.route('/createQuote',method='POST')
+def createQuote():
+    create_quote(bottle.request.forms.get('reference'),bottle.request.forms.get('customer'),bottle.request.forms.get('amount'))
+    bottle.redirect('/quotes')
 
 ########################################################################
 # Application functions
 ########################################################################
+
+def matchDate(date):
+    return re.match("(([0][1-9])|([3][0-1])|([1-2][0-9]))\/((0[1-9])|(1[0-2]))\/(2[0-9][0-9][0-9])",date)
 
 def list_quotes():
     return sorted(QUOTES.keys())
@@ -102,6 +120,19 @@ def read_order(reference):
 def read_customer(id_customer):
     return CUSTOMERS[id_customer]
 
+def list_customers():
+    customers = []
+    for customer in CUSTOMERS.values():
+        customers.append((customer.id,customer.name))
+    return customers
+
+def create_quote(reference,customer,amount):
+    quote = Quote()
+    quote.id = reference
+    quote.customer = customer
+    quote.amount = amount
+    QUOTES[reference] = quote
+    write_data()
 
 ########################################################################
 # Templates
@@ -113,6 +144,7 @@ TPLA_INDEX = '''
 <ul>
 <li><a href="/quotes">Devis en attente de commandes</a></li>
 <li><a href="/orders">Commandes validées</a></li>
+<li><a href="/create">Creer devis</a></li>
 </ul>
 '''
 
@@ -173,6 +205,27 @@ TPLA_ORDER = '''
 <p>
 <a href="/orders">Liste commandes</a>
 </p>
+'''
+
+TPLA_BADDATE = '''
+<p>Erreur la date renseignée ne respecte pas le format JJ/MM/AAAA</p>
+
+<a href="/quote/{{ quote }}">Retour au devis</a>
+'''
+
+TPLA_CREER_DEVIS = '''
+<p>Créer un devis</p>
+<form action="/createQuote" method="post">
+Reference: <input type="text" name="reference"/><br/>
+Client:
+<select name="customer">
+    % for (customer_id,customer_name) in customers:
+    <option value="{{customer_id}}">{{customer_name}}</option>
+    % end
+</select><br/>
+Montant: <input type="text" name="amount"/>
+<input type="submit" value="Créer"/>
+</form>
 '''
 
 ########################################################################

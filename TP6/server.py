@@ -10,6 +10,10 @@ import os
 
 import bottle
 import sys
+import json
+from order import Order
+from quote import Quote
+from customer import Customer
 
 ########################################################################
 # Application services
@@ -17,19 +21,19 @@ import sys
 
 @bottle.route('/')
 def index():
-    return bottle.template(INDEX)
+    return bottle.template(TPLA_INDEX)
 
 
 @bottle.route('/quotes')
 def quotes():
     quotes = list_quotes()
-    return bottle.template(QUOTES, quotes=quotes)
+    return bottle.template(TPLA_QUOTES, quotes=quotes)
 
 
 @bottle.route('/quote/<reference>')
 def quote(reference):
-    (customer, amount) = read_quote(reference)
-    return bottle.template(QUOTE, customer=customer, amount=amount, reference=reference)
+    (customer, quote) = read_quote(reference)
+    return bottle.template(TPLA_QUOTE, customer=customer.name, amount=quote.amount, reference=quote.id)
 
 
 @bottle.route('/valid/<reference>', method='POST')
@@ -42,13 +46,13 @@ def valid(reference):
 @bottle.route('/orders')
 def orders():
     orders = list_orders()
-    return bottle.template(ORDERS, orders=orders)
+    return bottle.template(TPLA_ORDERS, orders=orders)
 
 
 @bottle.route('/order/<reference>')
 def order(reference):
-    (customer, amount, date) = read_order(reference)
-    return bottle.template(ORDER, reference=reference, amount=amount, customer=customer, date=date)
+    (customer, order) = read_order(reference)
+    return bottle.template(TPLA_ORDER, reference=reference, amount=order.amount, customer=customer.name, date=order.date)
 
 
 ########################################################################
@@ -56,63 +60,54 @@ def order(reference):
 ########################################################################
 
 def list_quotes():
-    quotes = os.listdir(DATA_PATH + '/quotes')
-    return sorted(quotes)
+    return sorted(QUOTES.keys())
 
 
 def read_quote(reference):
-    filename = os.path.join(DATA_PATH + '/quotes', reference)
-    with open(filename) as the_file:
-        the_file.readline()
-        id_customer = the_file.readline().rstrip()
-        customer = read_customer(id_customer)
-        amount = 'Montant: ' + the_file.readline()
-        return (customer, amount)
+    quote = QUOTES[reference]
+    customer = read_customer(quote.customer)
+    return (customer, quote)
 
 
-def write_quote(reference, content):
-    filename = os.path.join(DATA_PATH + '/quotes', reference)
-    with open(filename, 'w') as the_file:
-        the_file.write(content)
+def write_data():
+    data = {}
+    data["customers"] = []
+    for customer in CUSTOMERS.values():
+        data["customers"].append(customer.exportJSON())
+    data["orders"] = []
+    for order in ORDERS.values():
+        data["orders"].append(order.exportJSON())
+    data["quotes"] = []
+    for quote in QUOTES.values():
+        data["quotes"].append(quote.exportJSON())
+    with open(DATA_PATH, 'w') as tfile:
+        json.dump(data,tfile)
 
 
 def valid_quote(reference, date):
-    filename = os.path.join(DATA_PATH + '/quotes', reference)
-    with open(filename) as the_file:
-        quote = the_file.read()
-        quote += 'Validé le ' + date
-        write_quote(reference, quote)
-    os.rename(
-        os.path.join(DATA_PATH + '/quotes', reference),
-        os.path.join(DATA_PATH + '/orders', reference))
-
+    quote = QUOTES[reference]
+    del QUOTES[reference]
+    ORDERS[reference] = quote.validateQuote(date)
+    write_data()
 
 def list_orders():
-    orders = os.listdir(DATA_PATH + '/orders')
-    return sorted(orders)
+    return sorted(ORDERS.keys())
 
 
 def read_order(reference):
-    filename = os.path.join(DATA_PATH + '/orders', reference)
-    with open(filename) as the_file:
-        the_file.readline()
-        id_customer = the_file.readline().rstrip()
-        customer = read_customer(id_customer)
-        amount = 'Montant: ' + the_file.readline()
-        date = the_file.readline()
-        return (customer, amount, date)
+    order = ORDERS[reference]
+    customer = read_customer(order.customer)
+    return (customer, order)
 
 def read_customer(id_customer):
-    filename = os.path.join(DATA_PATH + '/customers', id_customer)
-    with open(filename) as the_file:
-        return the_file.readline()
+    return CUSTOMERS[id_customer]
 
 
 ########################################################################
 # Templates
 ########################################################################
 
-INDEX = '''
+TPLA_INDEX = '''
 <p>Suivi des devis</p>
 
 <ul>
@@ -122,7 +117,7 @@ INDEX = '''
 '''
 
 
-QUOTES = '''
+TPLA_QUOTES = '''
 <p>Devis</p>
 <table>
   % for quote in quotes:
@@ -135,12 +130,12 @@ QUOTES = '''
 <a href="/">Accueil</a>
 '''
 
-QUOTE = '''
+TPLA_QUOTE = '''
 <p>Devis {{  reference }}</p>
 
 <p> {{ customer }}</p>
 
-<p> {{ amount }}</p>
+<p>Montant: {{ amount }}</p>
 
 <form action="/valid/{{ reference }}" method="post">
   Date validation : <input name="date" type="text" />
@@ -153,7 +148,7 @@ QUOTE = '''
 '''
 
 
-ORDERS = '''
+TPLA_ORDERS = '''
 <p>Commandes</p>
 <table>
   % for order in orders:
@@ -166,14 +161,14 @@ ORDERS = '''
 <a href="/">Accueil</a>
 '''
 
-ORDER = '''
+TPLA_ORDER = '''
 <p>Commande {{ reference }}</p>
 
 <p> {{ customer }} </p>
 
-<p> {{ amount }} </p>
+<p>Montant: {{ amount }} </p>
 
-<p> {{ date }} </p>
+<p>Validé le {{ date }} </p>
 
 <p>
 <a href="/orders">Liste commandes</a>
@@ -189,7 +184,24 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         DATA_PATH = sys.argv[1]
     else:
-        DATA_PATH = "data"
+        DATA_PATH = "data.json"
+    with open(DATA_PATH) as tfile:
+        data = json.load(tfile)
+    CUSTOMERS = {}
+    QUOTES = {}
+    ORDERS = {}
+    for json_customer in data["customers"]:
+        customer = Customer()
+        customer.parserCustomerJson(json_customer)
+        CUSTOMERS[customer.id] = customer
+    for json_order in data["orders"]:
+        order = Order()
+        order.parserOrderJson(json_order)
+        ORDERS[order.id] = order
+    for json_quote in data["quotes"]:
+        quote = Quote()
+        quote.parserQuoteJson(json_quote)
+        QUOTES[quote.id] = quote
     bottle.run(host='localhost', port=8080, debug=True)
 
 # eof

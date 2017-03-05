@@ -1,0 +1,19 @@
+{
+  "customers":[
+    {"id":"00001","name":"Aquamacs SARL","address":"12 rue du pipeau","city":"25023 BIDON","number":"3445567678"},
+    {"id":"00002","name":"Mozilla Inc","address":"4 avenue Truc","city":"456778 FAUX","number":"3445567678"}
+  ],
+  "orders":[
+    {"id":"00001","customer":"00002","amount":"1400.00","date":"20/03/2016"},
+    {"id":"00002","customer":"00001","amount":"2300.00","date":"30/04/2016"},
+    {"id":"00003","customer":"00002","amount":"900.00","date":"15/09/2016"},
+    {"id":"00004","customer":"00001","amount":"740.00","date":"19/12/2016"},
+    {"id":"00005","customer":"00002","amount":"2200.00","date":"12/02/2017"},
+    {"id":"00006","customer":"00001","amount":"1500.00","date":"10/01/2017"}
+  ],
+  "quotes":[
+    {"id":"00007","customer":"00002","amount":"14500.00"},
+    {"id":"00008","customer":"00001","amount":"950.00"},
+    {"id":"00009","customer":"00001","amount":"2600.00"}
+  ]
+}

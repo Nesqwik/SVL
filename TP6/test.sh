@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm -rf data_current
-cp -R data_test data_current
-python3 server.py data_current
+rm -rf data_current.json
+cp -R data_test.json data_current.json
+python3 server.py data_current.json

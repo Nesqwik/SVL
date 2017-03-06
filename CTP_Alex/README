@@ -1,0 +1,28 @@
+Dalencourt Alex
+
+Pour simuler la rampe de LED il est necessaire d'utiliser un tableau d'une taille relativement grande
+Utiliser une seule led ne permettra pas de controler si la rampe s'éteind entièrement.
+Utiliser deux led est un test trops petite pour tester si toutes les leds s'éteignent.
+Ainsi pour tester la rampe l'idéale est d'utiliser un grand nombre de led comme 20 / 50 ou 100 par exemple.
+On choisira 3 leds pour nos tests car afin de réaliser des tests en isolation il est nécessaire de mocker autant de led que la taille de la rampe.
+
+
+nosetests --cover-html --with-coverage --cover-erase --cover-branches --cover-package=rampe rampetest.py
+...
+Name       Stmts   Miss Branch BrPart  Cover
+--------------------------------------------
+rampe.py      14      0      2      0   100%
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+
+nosetests --cover-html --with-coverage --cover-erase --cover-branches --cover-package=led ledtest.py
+....
+Name     Stmts   Miss Branch BrPart  Cover
+------------------------------------------
+led.py      10      0      0      0   100%
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

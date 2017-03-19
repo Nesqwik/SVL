@@ -28,7 +28,7 @@ public class Tour {
     //@ requires disque != null;
     //@ signals (DisqueTropFatException e) disque.getTaille() < this.tour.get(this.tour.size() - 1).getTaille();
     public void empile(Disque disque) throws DisqueTropFatException {
-        if(disque.getTaille() < this.tour.get(this.tour.size()-1).getTaille()){
+        if(!this.tour.isEmpty() && disque.getTaille() > this.tour.get(this.tour.size()-1).getTaille()){
             throw new DisqueTropFatException();
         }
         tour.add(disque);

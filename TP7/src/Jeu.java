@@ -25,8 +25,9 @@ public class Jeu {
     public List<Tour> getTourList() {
         return tourList;
     }
-    //@ requires i > 0;
-    //@ requires i < tourList.size() - 1;
+
+    //@ requires i < tourList.size();
+    //@ requires i >= 0;
     //@ ensures \result == tourList.get(i);
     public Tour getTour(int i) {
         return tourList.get(i);
@@ -52,7 +53,7 @@ public class Jeu {
     public static void main (String[] args){
         Jeu jeu = new Jeu(3,3);
 
-        /*try {
+        try {
             jeu.switchDisque(0, 2);
             jeu.switchDisque(0, 1);
             jeu.switchDisque(2, 1);
@@ -64,7 +65,7 @@ public class Jeu {
             e.printStackTrace();
         } catch (DisqueTropFatException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 }

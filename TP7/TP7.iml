@@ -7,8 +7,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jmlruntime" level="project" />
-    <orderEntry type="library" name="openjml" level="project" />
-    <orderEntry type="library" name="jmlspecs" level="project" />
   </component>
 </module>

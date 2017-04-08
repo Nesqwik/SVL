@@ -18,3 +18,7 @@ L'outil Valide le programme OPEN JML. Open JML est moins performant ou en tout c
 ### Q3.
 
 Notre code est conforme dans les deux cas. Toutefois pour pouvoir avoir un code conforme nous avons du changer légèrement les demandes par rapport aux spécifications et plus particulièrement comment savoir le nombre d'éléments dans le buffer.
+
+### Q4.
+
+La partie spec# a été écrite mais ne fonctionne pas

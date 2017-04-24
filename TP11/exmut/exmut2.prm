@@ -1,0 +1,46 @@
+/*
+SVL 16-17 - M. Nebut
+démo Spin - occupation d'une ressource en exclusion mutuelle
+avec un mtype et plus d'états
+*/
+
+#define un_a_la_ressource (etat1 == occupation)
+#define deux_a_la_ressource (etat2 == occupation)
+#define un_demande (etat1 == demande)
+
+mtype = {oisif, demande, occupation};
+
+bool libre = true;
+mtype etat1 = oisif;
+mtype etat2 = oisif;
+
+proctype proc1() {
+	 
+do
+   :: etat1 = demande; atomic {libre -> libre = false;} etat1 = occupation; etat1 = oisif; libre = true;
+od	 
+}
+
+proctype proc2() {
+	 
+do
+   :: etat2 = demande; atomic {libre -> libre = false;} etat2 = occupation; etat2 = oisif; libre = true;
+od	 
+}
+
+init {
+run proc1(); run proc2();
+}
+
+ltl exclusion_mutuelle { [] ! (un_a_la_ressource && deux_a_la_ressource)}
+ltl lache_la_ressource { [] (un_a_la_ressource -> <> ! un_a_la_ressource)}
+ltl si_occupe_la_ressource_alors_variable_prise { [] (un_a_la_ressource -> ! libre)}
+ltl un_prendra_la_ressource { <> un_a_la_ressource } /* faux */
+ltl si_demande_alors_occupation { [] (un_demande -> <> un_a_la_ressource)} /* faux */
+
+/*
+spin -a exmut2.pml
+gcc -o verificateur pan.c
+./verificateur -a -N si_demande_alors_occupation
+spin -t -p exmut2.pml
+*/

@@ -1,0 +1,36 @@
+never exclusion_mutuelle {    /* !([] (! ((ressource1) && (ressource2)))) */
+T0_init:
+	do
+	:: atomic { (! ((! ((ressource1) && (ressource2))))) -> assert(!(! ((! ((ressource1) && (ressource2)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never lache_la_ressource {    /* !([] ((! (ressource1)) || (<> (! (ressource1))))) */
+T0_init:
+	do
+	:: (! ((! (ressource1)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((! (ressource1)))) -> goto accept_S4
+	od;
+}
+never si_occupe_la_ressource_alors_variable_prise {    /* !([] ((! (ressource1)) || (! (libre)))) */
+T0_init:
+	do
+	:: atomic { (! (((! (ressource1)) || (! (libre))))) -> assert(!(! (((! (ressource1)) || (! (libre)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never un_prendra_la_ressource {    /* !(<> (ressource1)) */
+accept_init:
+T0_init:
+	do
+	:: (! ((ressource1))) -> goto T0_init
+	od;
+}

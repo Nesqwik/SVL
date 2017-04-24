@@ -1,0 +1,38 @@
+never acces_exclusion_mutuelle {    /* !([] (! (((etatA==actif)) && ((etatB==actif))))) */
+T0_init:
+	do
+	:: atomic { (! ((! (((etatA==actif)) && ((etatB==actif)))))) -> assert(!(! ((! (((etatA==actif)) && ((etatB==actif))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never a_non_etatactif_infini {    /* !([] ((! ((etatA==actif))) || (<> ((etatA!=actif))))) */
+T0_init:
+	do
+	:: (! ((! ((etatA==actif)))) && ! (((etatA!=actif)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((etatA!=actif)))) -> goto accept_S4
+	od;
+}
+never a_actif_implique_verrou_ferme {    /* !([] ((! ((etatA==actif))) || ((lock==occupe)))) */
+T0_init:
+	do
+	:: atomic { (! (((! ((etatA==actif))) || ((lock==occupe))))) -> assert(!(! (((! ((etatA==actif))) || ((lock==occupe)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never a_en_attente_suivi_obligatoirement_etat_actif {    /* !([] ((! ((etatA==enAttente))) || ((338==actif)))) */
+T0_init:
+	do
+	:: atomic { (! (((! ((etatA==enAttente))) || ((338==actif))))) -> assert(!(! (((! ((etatA==enAttente))) || ((338==actif)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}

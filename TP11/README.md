@@ -19,3 +19,10 @@ Q3. fichier: exercice1.pml
     - La propriété est bien non vérifiée
 
 ### Section 3
+
+### Section 4
+
+Q2. Il existe un cas d'interblocage il est possible que le processus haut ne prenne jamais la main si les processus moyen et bas ne font que s'exécuter.
+
+# Pour les sections 3 et 4 nous n'arrivons pas à avoir de cas d'interblocage avec la commande ./verificateur
+# comme cela est expliqué dans la démo interblocage

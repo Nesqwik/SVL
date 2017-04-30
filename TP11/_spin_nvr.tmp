@@ -1,36 +1,36 @@
-never acces_exclusion_mutuelle {    /* !([] (! (((etatA==actif)) && ((etatB==actif))))) */
+never acces_exclusion_mutuelle {    /* !([] (! (((etatHaut==actif)) && ((etatBas==actif))))) */
 T0_init:
 	do
-	:: atomic { (! ((! (((etatA==actif)) && ((etatB==actif)))))) -> assert(!(! ((! (((etatA==actif)) && ((etatB==actif))))))) }
+	:: atomic { (! ((! (((etatHaut==actif)) && ((etatBas==actif)))))) -> assert(!(! ((! (((etatHaut==actif)) && ((etatBas==actif))))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:
 	skip
 }
-never a_non_etatactif_infini {    /* !([] ((! ((etatA==actif))) || (<> ((etatA!=actif))))) */
+never a_non_etatHautctif_infini {    /* !([] ((! ((etatHaut==actif))) || (<> ((etatHaut!=actif))))) */
 T0_init:
 	do
-	:: (! ((! ((etatA==actif)))) && ! (((etatA!=actif)))) -> goto accept_S4
+	:: (! ((! ((etatHaut==actif)))) && ! (((etatHaut!=actif)))) -> goto accept_S4
 	:: (1) -> goto T0_init
 	od;
 accept_S4:
 	do
-	:: (! (((etatA!=actif)))) -> goto accept_S4
+	:: (! (((etatHaut!=actif)))) -> goto accept_S4
 	od;
 }
-never a_actif_implique_verrou_ferme {    /* !([] ((! ((etatA==actif))) || ((lock==occupe)))) */
+never a_actif_implique_verrou_ferme {    /* !([] ((! ((etatHaut==actif))) || ((lock==occupe)))) */
 T0_init:
 	do
-	:: atomic { (! (((! ((etatA==actif))) || ((lock==occupe))))) -> assert(!(! (((! ((etatA==actif))) || ((lock==occupe)))))) }
+	:: atomic { (! (((! ((etatHaut==actif))) || ((lock==occupe))))) -> assert(!(! (((! ((etatHaut==actif))) || ((lock==occupe)))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:
 	skip
 }
-never a_en_attente_suivi_obligatoirement_etat_actif {    /* !([] ((! ((etatA==enAttente))) || ((338==actif)))) */
+never a_en_attente_suivi_obligatoirement_etat_actif {    /* !([] ((! ((etatHaut==enAttente))) || ((334==actif)))) */
 T0_init:
 	do
-	:: atomic { (! (((! ((etatA==enAttente))) || ((338==actif))))) -> assert(!(! (((! ((etatA==enAttente))) || ((338==actif)))))) }
+	:: atomic { (! (((! ((etatHaut==enAttente))) || ((334==actif))))) -> assert(!(! (((! ((etatHaut==enAttente))) || ((334==actif)))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:

@@ -28,7 +28,7 @@
 		;
 		goto R999;
 
-		 /* CLAIM a_non_etatactif_infini */
+		 /* CLAIM a_non_etatHautctif_infini */
 ;
 		;
 		;
@@ -77,11 +77,11 @@
 		;
 		goto R999;
 
-		 /* PROC procB */
+		 /* PROC procBas */
 
 	case 15: // STATE 1
 		;
-		now.etatB = trpt->bup.oval;
+		now.etatBas = trpt->bup.oval;
 		;
 		goto R999;
 
@@ -93,13 +93,13 @@
 
 	case 17: // STATE 5
 		;
-		now.etatB = trpt->bup.oval;
+		now.etatBas = trpt->bup.oval;
 		;
 		goto R999;
 
 	case 18: // STATE 6
 		;
-		now.etatB = trpt->bup.oval;
+		now.etatBas = trpt->bup.oval;
 		;
 		goto R999;
 
@@ -116,11 +116,11 @@
 		;
 		goto R999;
 
-		 /* PROC procA */
+		 /* PROC procHaut */
 
 	case 21: // STATE 1
 		;
-		now.etatA = trpt->bup.oval;
+		now.etatHaut = trpt->bup.oval;
 		;
 		goto R999;
 
@@ -132,13 +132,13 @@
 
 	case 23: // STATE 5
 		;
-		now.etatA = trpt->bup.oval;
+		now.etatHaut = trpt->bup.oval;
 		;
 		goto R999;
 
 	case 24: // STATE 6
 		;
-		now.etatA = trpt->bup.oval;
+		now.etatHaut = trpt->bup.oval;
 		;
 		goto R999;
 

@@ -34,9 +34,9 @@ settable(void)
 	    T->nxt	= settr(63,0,4,0,0,"DO", 0, 2, 0);
 	T = trans[ 6][3] = settr(60,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(60,2,1,0,0,"ATOMIC", 1, 2, 0);
-	trans[6][1]	= settr(58,0,6,3,3,"(!((!((etatA==enAttente))||(338==actif))))", 1, 2, 0); /* m: 2 -> 6,0 */
+	trans[6][1]	= settr(58,0,6,3,3,"(!((!((etatHaut==enAttente))||(334==actif))))", 1, 2, 0); /* m: 2 -> 6,0 */
 	reached6[2] = 1;
-	trans[6][2]	= settr(0,0,0,0,0,"assert(!(!((!((etatA==enAttente))||(338==actif)))))",0,0,0);
+	trans[6][2]	= settr(0,0,0,0,0,"assert(!(!((!((etatHaut==enAttente))||(334==actif)))))",0,0,0);
 	trans[6][4]	= settr(61,0,6,1,0,"(1)", 0, 2, 0);
 	trans[6][5]	= settr(62,0,6,1,0,"goto T0_init", 0, 2, 0);
 	trans[6][8]	= settr(65,0,9,1,0,"break", 0, 2, 0);
@@ -53,16 +53,16 @@ settable(void)
 	    T->nxt	= settr(53,0,4,0,0,"DO", 0, 2, 0);
 	T = trans[ 5][3] = settr(50,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(50,2,1,0,0,"ATOMIC", 1, 2, 0);
-	trans[5][1]	= settr(48,0,6,5,5,"(!((!((etatA==actif))||(lock==occupe))))", 1, 2, 0); /* m: 2 -> 6,0 */
+	trans[5][1]	= settr(48,0,6,5,5,"(!((!((etatHaut==actif))||(lock==occupe))))", 1, 2, 0); /* m: 2 -> 6,0 */
 	reached5[2] = 1;
-	trans[5][2]	= settr(0,0,0,0,0,"assert(!(!((!((etatA==actif))||(lock==occupe)))))",0,0,0);
+	trans[5][2]	= settr(0,0,0,0,0,"assert(!(!((!((etatHaut==actif))||(lock==occupe)))))",0,0,0);
 	trans[5][4]	= settr(51,0,6,1,0,"(1)", 0, 2, 0);
 	trans[5][5]	= settr(52,0,6,1,0,"goto T0_init", 0, 2, 0);
 	trans[5][8]	= settr(55,0,9,1,0,"break", 0, 2, 0);
 	trans[5][9]	= settr(56,0,10,1,0,"(1)", 0, 2, 0);
 	trans[5][10]	= settr(57,0,0,6,6,"-end-", 0, 3500, 0);
 
-	/* proctype 4: a_non_etatactif_infini */
+	/* proctype 4: a_non_etatHautctif_infini */
 
 	trans[4] = (Trans **) emalloc(14*sizeof(Trans *));
 
@@ -70,7 +70,7 @@ settable(void)
 	T = trans[4][5] = settr(39,0,0,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(39,0,1,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(39,0,3,0,0,"DO", 0, 2, 0);
-	trans[4][1]	= settr(35,0,10,7,0,"((!(!((etatA==actif)))&&!((etatA!=actif))))", 1, 2, 0);
+	trans[4][1]	= settr(35,0,10,7,0,"((!(!((etatHaut==actif)))&&!((etatHaut!=actif))))", 1, 2, 0);
 	trans[4][2]	= settr(36,0,10,1,0,"goto accept_S4", 0, 2, 0);
 	trans[4][3]	= settr(37,0,5,1,0,"(1)", 0, 2, 0);
 	trans[4][4]	= settr(38,0,5,1,0,"goto T0_init", 0, 2, 0);
@@ -78,7 +78,7 @@ settable(void)
 	trans[4][11]	= settr(45,0,10,1,0,".(goto)", 0, 2, 0);
 	T = trans[4][10] = settr(44,0,0,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(44,0,8,0,0,"DO", 0, 2, 0);
-	trans[4][8]	= settr(42,0,10,8,0,"(!((etatA!=actif)))", 1, 2, 0);
+	trans[4][8]	= settr(42,0,10,8,0,"(!((etatHaut!=actif)))", 1, 2, 0);
 	trans[4][9]	= settr(43,0,10,1,0,"goto accept_S4", 0, 2, 0);
 	trans[4][12]	= settr(46,0,13,1,0,"break", 0, 2, 0);
 	trans[4][13]	= settr(47,0,0,9,9,"-end-", 0, 3500, 0);
@@ -93,9 +93,9 @@ settable(void)
 	    T->nxt	= settr(30,0,4,0,0,"DO", 0, 2, 0);
 	T = trans[ 3][3] = settr(27,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(27,2,1,0,0,"ATOMIC", 1, 2, 0);
-	trans[3][1]	= settr(25,0,6,10,10,"(!(!(((etatA==actif)&&(etatB==actif)))))", 1, 2, 0); /* m: 2 -> 6,0 */
+	trans[3][1]	= settr(25,0,6,10,10,"(!(!(((etatHaut==actif)&&(etatBas==actif)))))", 1, 2, 0); /* m: 2 -> 6,0 */
 	reached3[2] = 1;
-	trans[3][2]	= settr(0,0,0,0,0,"assert(!(!(!(((etatA==actif)&&(etatB==actif))))))",0,0,0);
+	trans[3][2]	= settr(0,0,0,0,0,"assert(!(!(!(((etatHaut==actif)&&(etatBas==actif))))))",0,0,0);
 	trans[3][4]	= settr(28,0,6,1,0,"(1)", 0, 2, 0);
 	trans[3][5]	= settr(29,0,6,1,0,"goto T0_init", 0, 2, 0);
 	trans[3][8]	= settr(32,0,9,1,0,"break", 0, 2, 0);
@@ -106,44 +106,44 @@ settable(void)
 
 	trans[2] = (Trans **) emalloc(4*sizeof(Trans *));
 
-	trans[2][1]	= settr(22,0,2,12,12,"(run procA())", 0, 2, 0);
-	trans[2][2]	= settr(23,0,3,13,13,"(run procB())", 0, 2, 0);
+	trans[2][1]	= settr(22,0,2,12,12,"(run procHaut())", 0, 2, 0);
+	trans[2][2]	= settr(23,0,3,13,13,"(run procBas())", 0, 2, 0);
 	trans[2][3]	= settr(24,0,0,14,14,"-end-", 0, 3500, 0);
 
-	/* proctype 1: procB */
+	/* proctype 1: procBas */
 
 	trans[1] = (Trans **) emalloc(12*sizeof(Trans *));
 
 	trans[1][9]	= settr(19,0,8,1,0,".(goto)", 0, 2, 0);
 	T = trans[1][8] = settr(18,0,0,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(18,0,1,0,0,"DO", 0, 2, 0);
-	trans[1][1]	= settr(11,0,4,15,15,"etatB = enAttente", 1, 2, 0);
+	trans[1][1]	= settr(11,0,4,15,15,"etatBas = enAttente", 1, 2, 0);
 	T = trans[ 1][4] = settr(14,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(14,2,2,0,0,"ATOMIC", 1, 2, 0);
-	trans[1][2]	= settr(12,4,5,16,16,"((lock==libre))", 1, 2, 0); /* m: 3 -> 5,0 */
+	trans[1][2]	= settr(12,4,5,16,16,"(((lock==libre)&&(etatHaut==inactif)))", 1, 2, 0); /* m: 3 -> 5,0 */
 	reached1[3] = 1;
 	trans[1][3]	= settr(0,0,0,0,0,"lock = occupe",0,0,0);
-	trans[1][5]	= settr(15,0,6,17,17,"etatB = actif", 1, 2, 0);
-	trans[1][6]	= settr(16,0,7,18,18,"etatB = inactif", 1, 2, 0);
+	trans[1][5]	= settr(15,0,6,17,17,"etatBas = actif", 1, 2, 0);
+	trans[1][6]	= settr(16,0,7,18,18,"etatBas = inactif", 1, 2, 0);
 	trans[1][7]	= settr(17,0,8,19,19,"lock = libre", 1, 2, 0);
 	trans[1][10]	= settr(20,0,11,1,0,"break", 0, 2, 0);
 	trans[1][11]	= settr(21,0,0,20,20,"-end-", 0, 3500, 0);
 
-	/* proctype 0: procA */
+	/* proctype 0: procHaut */
 
 	trans[0] = (Trans **) emalloc(12*sizeof(Trans *));
 
 	trans[0][9]	= settr(8,0,8,1,0,".(goto)", 0, 2, 0);
 	T = trans[0][8] = settr(7,0,0,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(7,0,1,0,0,"DO", 0, 2, 0);
-	trans[0][1]	= settr(0,0,4,21,21,"etatA = enAttente", 1, 2, 0);
+	trans[0][1]	= settr(0,0,4,21,21,"etatHaut = enAttente", 1, 2, 0);
 	T = trans[ 0][4] = settr(3,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(3,2,2,0,0,"ATOMIC", 1, 2, 0);
 	trans[0][2]	= settr(1,4,5,22,22,"((lock==libre))", 1, 2, 0); /* m: 3 -> 5,0 */
 	reached0[3] = 1;
 	trans[0][3]	= settr(0,0,0,0,0,"lock = occupe",0,0,0);
-	trans[0][5]	= settr(4,0,6,23,23,"etatA = actif", 1, 2, 0);
-	trans[0][6]	= settr(5,0,7,24,24,"etatA = inactif", 1, 2, 0);
+	trans[0][5]	= settr(4,0,6,23,23,"etatHaut = actif", 1, 2, 0);
+	trans[0][6]	= settr(5,0,7,24,24,"etatHaut = inactif", 1, 2, 0);
 	trans[0][7]	= settr(6,0,8,25,25,"lock = libre", 1, 2, 0);
 	trans[0][10]	= settr(9,0,11,1,0,"break", 0, 2, 0);
 	trans[0][11]	= settr(10,0,0,26,26,"-end-", 0, 3500, 0);

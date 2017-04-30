@@ -2,7 +2,7 @@
 #define PAN_H
 
 #define SpinVersion	"Spin Version 6.4.6 -- 2 December 2016"
-#define PanSource	"exercice1.pml"
+#define PanSource	"exercice2.pml"
 
 #define G_long	8
 #define G_int	4
@@ -146,7 +146,7 @@ typedef struct S_F_MAP {
 #define maxseq5	57
 #define _endstate5	10
 
-#define _nstates4	14	/* a_non_etatactif_infini */
+#define _nstates4	14	/* a_non_etatHautctif_infini */
 #define minseq4	35
 #define maxseq4	47
 #define _endstate4	13
@@ -161,12 +161,12 @@ typedef struct S_F_MAP {
 #define maxseq2	24
 #define _endstate2	3
 
-#define _nstates1	12	/* procB */
+#define _nstates1	12	/* procBas */
 #define minseq1	11
 #define maxseq1	21
 #define _endstate1	11
 
-#define _nstates0	12	/* procA */
+#define _nstates0	12	/* procHaut */
 #define minseq0	0
 #define maxseq0	10
 #define _endstate0	11
@@ -223,7 +223,7 @@ typedef struct P5 { /* a_actif_implique_verrou_ferme */
 } P5;
 #define Air5	(sizeof(P5) - 3)
 
-typedef struct P4 { /* a_non_etatactif_infini */
+typedef struct P4 { /* a_non_etatHautctif_infini */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 5; /* state    */
@@ -254,8 +254,8 @@ typedef struct P2 { /* :init: */
 } P2;
 #define Air2	(sizeof(P2) - 3)
 
-#define PprocB	((P1 *)this)
-typedef struct P1 { /* procB */
+#define PprocBas	((P1 *)this)
+typedef struct P1 { /* procBas */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 5; /* state    */
@@ -265,8 +265,8 @@ typedef struct P1 { /* procB */
 } P1;
 #define Air1	(sizeof(P1) - 3)
 
-#define PprocA	((P0 *)this)
-typedef struct P0 { /* procA */
+#define PprocHaut	((P0 *)this)
+typedef struct P0 { /* procHaut */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 5; /* state    */
@@ -488,8 +488,8 @@ typedef struct State {
 		unsigned short _event;
 	#endif
 #endif
-	uchar etatA;
-	uchar etatB;
+	uchar etatHaut;
+	uchar etatBas;
 	uchar lock;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */

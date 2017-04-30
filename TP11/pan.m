@@ -20,7 +20,7 @@
 		_m = 3; goto P999;
 
 		 /* CLAIM a_en_attente_suivi_obligatoirement_etat_actif */
-	case 3: // STATE 1 - _spin_nvr.tmp:32 - [(!((!((etatA==enAttente))||(338==actif))))] (6:0:0 - 1)
+	case 3: // STATE 1 - _spin_nvr.tmp:32 - [(!((!((etatHaut==enAttente))||(334==actif))))] (6:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -43,11 +43,11 @@
 #endif
 #endif
 		reached[6][1] = 1;
-		if (!( !(( !((now.etatA==2))||(338==1)))))
+		if (!( !(( !((now.etatHaut==2))||(334==1)))))
 			continue;
-		/* merge: assert(!(!((!((etatA==enAttente))||(338==actif)))))(0, 2, 6) */
+		/* merge: assert(!(!((!((etatHaut==enAttente))||(334==actif)))))(0, 2, 6) */
 		reached[6][2] = 1;
-		spin_assert( !( !(( !((now.etatA==2))||(338==1)))), " !( !(( !((etatA==2))||(338==1))))", II, tt, t);
+		spin_assert( !( !(( !((now.etatHaut==2))||(334==1)))), " !( !(( !((etatHaut==2))||(334==1))))", II, tt, t);
 		/* merge: .(goto)(0, 7, 6) */
 		reached[6][7] = 1;
 		;
@@ -79,7 +79,7 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM a_actif_implique_verrou_ferme */
-	case 5: // STATE 1 - _spin_nvr.tmp:23 - [(!((!((etatA==actif))||(lock==occupe))))] (6:0:0 - 1)
+	case 5: // STATE 1 - _spin_nvr.tmp:23 - [(!((!((etatHaut==actif))||(lock==occupe))))] (6:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -102,11 +102,11 @@
 #endif
 #endif
 		reached[5][1] = 1;
-		if (!( !(( !((now.etatA==1))||(now.lock==4)))))
+		if (!( !(( !((now.etatHaut==1))||(now.lock==4)))))
 			continue;
-		/* merge: assert(!(!((!((etatA==actif))||(lock==occupe)))))(0, 2, 6) */
+		/* merge: assert(!(!((!((etatHaut==actif))||(lock==occupe)))))(0, 2, 6) */
 		reached[5][2] = 1;
-		spin_assert( !( !(( !((now.etatA==1))||(now.lock==4)))), " !( !(( !((etatA==1))||(lock==4))))", II, tt, t);
+		spin_assert( !( !(( !((now.etatHaut==1))||(now.lock==4)))), " !( !(( !((etatHaut==1))||(lock==4))))", II, tt, t);
 		/* merge: .(goto)(0, 7, 6) */
 		reached[5][7] = 1;
 		;
@@ -137,8 +137,8 @@
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
-		 /* CLAIM a_non_etatactif_infini */
-	case 7: // STATE 1 - _spin_nvr.tmp:12 - [((!(!((etatA==actif)))&&!((etatA!=actif))))] (0:0:0 - 1)
+		 /* CLAIM a_non_etatHautctif_infini */
+	case 7: // STATE 1 - _spin_nvr.tmp:12 - [((!(!((etatHaut==actif)))&&!((etatHaut!=actif))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -161,10 +161,10 @@
 #endif
 #endif
 		reached[4][1] = 1;
-		if (!(( !( !((now.etatA==1)))&& !((now.etatA!=1)))))
+		if (!(( !( !((now.etatHaut==1)))&& !((now.etatHaut!=1)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 8: // STATE 8 - _spin_nvr.tmp:17 - [(!((etatA!=actif)))] (0:0:0 - 1)
+	case 8: // STATE 8 - _spin_nvr.tmp:17 - [(!((etatHaut!=actif)))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -187,7 +187,7 @@
 #endif
 #endif
 		reached[4][8] = 1;
-		if (!( !((now.etatA!=1))))
+		if (!( !((now.etatHaut!=1))))
 			continue;
 		_m = 3; goto P999; /* 0 */
 	case 9: // STATE 13 - _spin_nvr.tmp:19 - [-end-] (0:0:0 - 1)
@@ -217,7 +217,7 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM acces_exclusion_mutuelle */
-	case 10: // STATE 1 - _spin_nvr.tmp:3 - [(!(!(((etatA==actif)&&(etatB==actif)))))] (6:0:0 - 1)
+	case 10: // STATE 1 - _spin_nvr.tmp:3 - [(!(!(((etatHaut==actif)&&(etatBas==actif)))))] (6:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -240,11 +240,11 @@
 #endif
 #endif
 		reached[3][1] = 1;
-		if (!( !( !(((now.etatA==1)&&(now.etatB==1))))))
+		if (!( !( !(((now.etatHaut==1)&&(now.etatBas==1))))))
 			continue;
-		/* merge: assert(!(!(!(((etatA==actif)&&(etatB==actif))))))(0, 2, 6) */
+		/* merge: assert(!(!(!(((etatHaut==actif)&&(etatBas==actif))))))(0, 2, 6) */
 		reached[3][2] = 1;
-		spin_assert( !( !( !(((now.etatA==1)&&(now.etatB==1))))), " !( !( !(((etatA==1)&&(etatB==1)))))", II, tt, t);
+		spin_assert( !( !( !(((now.etatHaut==1)&&(now.etatBas==1))))), " !( !( !(((etatHaut==1)&&(etatBas==1)))))", II, tt, t);
 		/* merge: .(goto)(0, 7, 6) */
 		reached[3][7] = 1;
 		;
@@ -276,39 +276,39 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC :init: */
-	case 12: // STATE 1 - exercice1.pml:20 - [(run procA())] (0:0:0 - 1)
+	case 12: // STATE 1 - exercice2.pml:20 - [(run procHaut())] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][1] = 1;
 		if (!(addproc(II, 1, 0)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 13: // STATE 2 - exercice1.pml:21 - [(run procB())] (0:0:0 - 1)
+	case 13: // STATE 2 - exercice2.pml:21 - [(run procBas())] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][2] = 1;
 		if (!(addproc(II, 1, 1)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 14: // STATE 3 - exercice1.pml:22 - [-end-] (0:0:0 - 1)
+	case 14: // STATE 3 - exercice2.pml:22 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][3] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
-		 /* PROC procB */
-	case 15: // STATE 1 - exercice1.pml:15 - [etatB = enAttente] (0:0:1 - 1)
+		 /* PROC procBas */
+	case 15: // STATE 1 - exercice2.pml:15 - [etatBas = enAttente] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][1] = 1;
-		(trpt+1)->bup.oval = now.etatB;
-		now.etatB = 2;
+		(trpt+1)->bup.oval = now.etatBas;
+		now.etatBas = 2;
 #ifdef VAR_RANGES
-		logval("etatB", now.etatB);
+		logval("etatBas", now.etatBas);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 16: // STATE 2 - exercice1.pml:15 - [((lock==libre))] (5:0:1 - 1)
+	case 16: // STATE 2 - exercice2.pml:15 - [(((lock==libre)&&(etatHaut==inactif)))] (5:0:1 - 1)
 		IfNotBlocked
 		reached[1][2] = 1;
-		if (!((now.lock==5)))
+		if (!(((now.lock==5)&&(now.etatHaut==3))))
 			continue;
 		/* merge: lock = occupe(0, 3, 5) */
 		reached[1][3] = 1;
@@ -319,27 +319,27 @@
 #endif
 		;
 		_m = 3; goto P999; /* 1 */
-	case 17: // STATE 5 - exercice1.pml:15 - [etatB = actif] (0:0:1 - 1)
+	case 17: // STATE 5 - exercice2.pml:15 - [etatBas = actif] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][5] = 1;
-		(trpt+1)->bup.oval = now.etatB;
-		now.etatB = 1;
+		(trpt+1)->bup.oval = now.etatBas;
+		now.etatBas = 1;
 #ifdef VAR_RANGES
-		logval("etatB", now.etatB);
+		logval("etatBas", now.etatBas);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 18: // STATE 6 - exercice1.pml:15 - [etatB = inactif] (0:0:1 - 1)
+	case 18: // STATE 6 - exercice2.pml:15 - [etatBas = inactif] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][6] = 1;
-		(trpt+1)->bup.oval = now.etatB;
-		now.etatB = 3;
+		(trpt+1)->bup.oval = now.etatBas;
+		now.etatBas = 3;
 #ifdef VAR_RANGES
-		logval("etatB", now.etatB);
+		logval("etatBas", now.etatBas);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 19: // STATE 7 - exercice1.pml:15 - [lock = libre] (0:0:1 - 1)
+	case 19: // STATE 7 - exercice2.pml:15 - [lock = libre] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][7] = 1;
 		(trpt+1)->bup.oval = now.lock;
@@ -349,24 +349,24 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 20: // STATE 11 - exercice1.pml:17 - [-end-] (0:0:0 - 1)
+	case 20: // STATE 11 - exercice2.pml:17 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][11] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
-		 /* PROC procA */
-	case 21: // STATE 1 - exercice1.pml:9 - [etatA = enAttente] (0:0:1 - 1)
+		 /* PROC procHaut */
+	case 21: // STATE 1 - exercice2.pml:9 - [etatHaut = enAttente] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][1] = 1;
-		(trpt+1)->bup.oval = now.etatA;
-		now.etatA = 2;
+		(trpt+1)->bup.oval = now.etatHaut;
+		now.etatHaut = 2;
 #ifdef VAR_RANGES
-		logval("etatA", now.etatA);
+		logval("etatHaut", now.etatHaut);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 22: // STATE 2 - exercice1.pml:9 - [((lock==libre))] (5:0:1 - 1)
+	case 22: // STATE 2 - exercice2.pml:9 - [((lock==libre))] (5:0:1 - 1)
 		IfNotBlocked
 		reached[0][2] = 1;
 		if (!((now.lock==5)))
@@ -380,27 +380,27 @@
 #endif
 		;
 		_m = 3; goto P999; /* 1 */
-	case 23: // STATE 5 - exercice1.pml:9 - [etatA = actif] (0:0:1 - 1)
+	case 23: // STATE 5 - exercice2.pml:9 - [etatHaut = actif] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][5] = 1;
-		(trpt+1)->bup.oval = now.etatA;
-		now.etatA = 1;
+		(trpt+1)->bup.oval = now.etatHaut;
+		now.etatHaut = 1;
 #ifdef VAR_RANGES
-		logval("etatA", now.etatA);
+		logval("etatHaut", now.etatHaut);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 24: // STATE 6 - exercice1.pml:9 - [etatA = inactif] (0:0:1 - 1)
+	case 24: // STATE 6 - exercice2.pml:9 - [etatHaut = inactif] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][6] = 1;
-		(trpt+1)->bup.oval = now.etatA;
-		now.etatA = 3;
+		(trpt+1)->bup.oval = now.etatHaut;
+		now.etatHaut = 3;
 #ifdef VAR_RANGES
-		logval("etatA", now.etatA);
+		logval("etatHaut", now.etatHaut);
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 25: // STATE 7 - exercice1.pml:9 - [lock = libre] (0:0:1 - 1)
+	case 25: // STATE 7 - exercice2.pml:9 - [lock = libre] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][7] = 1;
 		(trpt+1)->bup.oval = now.lock;
@@ -410,7 +410,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 26: // STATE 11 - exercice1.pml:11 - [-end-] (0:0:0 - 1)
+	case 26: // STATE 11 - exercice2.pml:11 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][11] = 1;
 		if (!delproc(1, II)) continue;

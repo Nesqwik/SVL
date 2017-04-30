@@ -19,7 +19,7 @@ proctype procMoyen() {
 
 proctype procBas() {
   do
-    :: etatBas = enAttente; atomic {lock == libre && etatMoyen == inactif -> lock = occupe;} etatBas = actif; etatBas = inactif; lock = libre;
+    :: etatBas = enAttente; atomic {etatMoyen == inactif -> lock = occupe;} etatBas = actif; etatBas = inactif; lock = libre;
   od
 }
 
@@ -28,3 +28,10 @@ init {
   run procMoyen();
   run procBas();
 }
+
+
+ltl Haut_attente_forcement_actif_apres { [] (etatHaut == enAttente && X (etatHaut == actif))}
+ltl acces_exclusion_mutuelle { [] ! (etatHaut == actif && etatMoyen == actif || etatHaut == actif && etatBas == actif || etatMoyen == actif && etatBas == actif)}
+ltl a_non_etatHautctif_infini { [] (etatHaut == actif -> <> (etatHaut != actif))}
+ltl a_actif_implique_verrou_ferme { [] (etatHaut == actif -> lock == occupe)}
+ltl a_en_attente_suivi_obligatoirement_etat_actif { [] (etatHaut == enAttente -> <> etatHaut == actif)}
